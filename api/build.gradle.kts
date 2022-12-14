@@ -39,6 +39,9 @@ dependencies {
 
   // Datetime
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
+  // Auth
+  implementation("com.osohq:oso:0.26.4")
 }
 
 testing {
