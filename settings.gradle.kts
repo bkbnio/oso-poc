@@ -1,11 +1,7 @@
-rootProject.name = "sourdough-kt"
+rootProject.name = "oso-poc"
 
-include("app")
 include("api")
-include("cli")
-include("client")
 include("domain")
-include("lib")
 include("persistence")
 
 // Feature Previews
