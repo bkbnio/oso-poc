@@ -17,9 +17,10 @@ CREATE TABLE book
     updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
-CREATE TABLE user (
+CREATE TABLE users
+(
     id         UUID                        NOT NULL,
-    name       TEXT                        NOT NULL,
+    email      TEXT                        NOT NULL UNIQUE,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );

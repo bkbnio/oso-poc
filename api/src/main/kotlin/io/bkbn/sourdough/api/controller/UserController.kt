@@ -94,6 +94,7 @@ object UserController {
         summary("Delete User")
         description("Delete a user")
         response {
+          responseType<Unit>()
           responseCode(HttpStatusCode.NoContent)
           description("The user was deleted")
         }

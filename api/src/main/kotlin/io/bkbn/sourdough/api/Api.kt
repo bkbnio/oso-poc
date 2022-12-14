@@ -9,6 +9,7 @@ import io.bkbn.kompendium.oas.serialization.KompendiumSerializersModule
 import io.bkbn.sourdough.api.controller.AuthorController.authorHandler
 import io.bkbn.sourdough.api.controller.BookController.bookHandler
 import io.bkbn.sourdough.api.controller.HealthCheckController.healthCheckHandler
+import io.bkbn.sourdough.api.controller.UserController.userHandler
 import io.bkbn.sourdough.api.documentation.ApplicationSpec
 import io.bkbn.sourdough.persistence.ConnectionManager
 import io.ktor.serialization.kotlinx.json.json
@@ -63,5 +64,6 @@ private fun Application.apiRoutes() {
     healthCheckHandler()
     authorHandler()
     bookHandler()
+    userHandler()
   }
 }

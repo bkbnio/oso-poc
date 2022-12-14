@@ -9,8 +9,8 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import java.util.*
 
-object UserTable : UUIDTable("user") {
-  val email = varchar("name", 255).uniqueIndex()
+object UserTable : UUIDTable("users") {
+  val email = varchar("email", 255).uniqueIndex()
   val createdAt = timestamp("created_at").default(Clock.System.now())
   val updatedAt = timestamp("updated_at").default(Clock.System.now())
 }
