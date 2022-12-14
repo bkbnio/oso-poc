@@ -14,6 +14,7 @@ import io.bkbn.sourdough.api.documentation.ApplicationSpec
 import io.bkbn.sourdough.domain.Repo
 import io.bkbn.sourdough.domain.User
 import io.bkbn.sourdough.persistence.ConnectionManager
+import io.bkbn.sourdough.persistence.repository.RepoRepository
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -34,14 +35,8 @@ fun main() {
   // Activate database connection
   ConnectionManager.activateDatabaseConnection()
 
-  val oso = Oso()
-  oso.registerClass(Repo::class.java, "Repo")
-  oso.registerClass(User::class.java, "User")
-  oso.loadStr("""
-    resource Repo {}
-
-    actor User {}
-  """.trimIndent())
+  RepoRepository.create(name = "test", isPublic = true)
+  RepoRepository.create(name = "sneaky", isPublic = false)
 
   // Start webserver
   embeddedServer(

@@ -15,10 +15,18 @@ import io.ktor.server.routing.*
 import java.util.*
 
 object RepoController {
-
   fun Route.repoHandler() {
     route("/repo") {
       rootDocumentation()
+      get {
+        val name = call.request.queryParameters["name"]
+        val result = if (name != null) {
+          listOf(RepoService.readByName(name))
+        } else {
+          RepoService.readAll()
+        }
+        call.respond(HttpStatusCode.OK, result)
+      }
       post {
         val request = call.receive<RepoModels.CreateRequest>()
         val result = RepoService.create(request)
@@ -49,6 +57,15 @@ object RepoController {
   private fun Route.rootDocumentation() {
     install(NotarizedRoute()) {
       tags = setOf("Repo")
+      get = GetInfo.builder {
+        summary("Get all repos or a single repo by name")
+        description("Get all repos or a single repo by name")
+        response {
+          responseCode(HttpStatusCode.OK)
+          description("A list of repos")
+          responseType<List<RepoModels.Response>>()
+        }
+      }
       post = PostInfo.builder {
         summary("Create Repo")
         description("Create a new repo")

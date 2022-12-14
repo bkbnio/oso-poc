@@ -2,6 +2,7 @@ package io.bkbn.sourdough.persistence.repository
 
 import io.bkbn.sourdough.domain.Repo
 import io.bkbn.sourdough.persistence.entity.RepoEntity
+import io.bkbn.sourdough.persistence.entity.RepoTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -23,8 +24,17 @@ object RepoRepository {
     entity.toRepo()
   }
 
+  fun readAll(): List<Repo> = transaction {
+    RepoEntity.all().map { it.toRepo() }
+  }
+
   fun read(id: UUID): Repo = transaction {
     val entity = RepoEntity.findById(id) ?: error("No repo found with id: $id")
+    entity.toRepo()
+  }
+
+  fun readByName(name: String): Repo = transaction {
+    val entity = RepoEntity.find { RepoTable.name eq name }.firstOrNull() ?: error("No repo found with name: $name")
     entity.toRepo()
   }
 
