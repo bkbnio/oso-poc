@@ -2,15 +2,17 @@
 
 package io.bkbn.sourdough.api
 
+import com.osohq.oso.Oso
 import io.bkbn.kompendium.core.plugin.NotarizedApplication
 import io.bkbn.kompendium.core.routes.redoc
 import io.bkbn.kompendium.json.schema.definition.TypeDefinition
 import io.bkbn.kompendium.oas.serialization.KompendiumSerializersModule
-import io.bkbn.sourdough.api.controller.AuthorController.authorHandler
-import io.bkbn.sourdough.api.controller.BookController.bookHandler
 import io.bkbn.sourdough.api.controller.HealthCheckController.healthCheckHandler
+import io.bkbn.sourdough.api.controller.RepoController.repoHandler
 import io.bkbn.sourdough.api.controller.UserController.userHandler
 import io.bkbn.sourdough.api.documentation.ApplicationSpec
+import io.bkbn.sourdough.domain.Repo
+import io.bkbn.sourdough.domain.User
 import io.bkbn.sourdough.persistence.ConnectionManager
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -31,6 +33,15 @@ fun main() {
 
   // Activate database connection
   ConnectionManager.activateDatabaseConnection()
+
+  val oso = Oso()
+  oso.registerClass(Repo::class.java, "Repo")
+  oso.registerClass(User::class.java, "User")
+  oso.loadStr("""
+    resource Repo {}
+
+    actor User {}
+  """.trimIndent())
 
   // Start webserver
   embeddedServer(
@@ -62,8 +73,7 @@ private fun Application.apiRoutes() {
   routing {
     redoc(pageTitle = "Sourdough Docs")
     healthCheckHandler()
-    authorHandler()
-    bookHandler()
     userHandler()
+    repoHandler()
   }
 }

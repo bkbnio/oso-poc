@@ -2,7 +2,8 @@ package io.bkbn.sourdough.domain
 
 import java.util.UUID
 
-data class Author(
+data class Repo(
   val id: UUID,
-  val name: String
+  val name: String,
+  val isPublic: Boolean
 )
