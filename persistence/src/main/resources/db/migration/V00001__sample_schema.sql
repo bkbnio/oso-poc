@@ -17,6 +17,13 @@ CREATE TABLE book
     updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
+CREATE TABLE user (
+    id         UUID                        NOT NULL,
+    name       TEXT                        NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
+
 ALTER TABLE ONLY author
     ADD CONSTRAINT author_pkey PRIMARY KEY (id);
 
