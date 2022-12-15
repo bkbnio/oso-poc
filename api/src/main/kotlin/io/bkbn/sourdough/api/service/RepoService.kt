@@ -3,6 +3,7 @@ package io.bkbn.sourdough.api.service
 import com.osohq.oso.Oso
 import io.bkbn.sourdough.api.model.RepoModels
 import io.bkbn.sourdough.domain.Repo
+import io.bkbn.sourdough.domain.RepoRole
 import io.bkbn.sourdough.domain.User
 import io.bkbn.sourdough.persistence.repository.RepoRepository
 import java.util.*
@@ -68,7 +69,11 @@ allow(actor, action, resource) if
 
   fun readByName(name: String): RepoModels.Response {
     val result = RepoRepository.readByName(name)
-    val user = User(id = UUID.randomUUID(), email = "admin@bkbn.io")
+    val user = User(
+      id = UUID.randomUUID(),
+      email = "admin@bkbn.io",
+      repoRoles = listOf(RepoRole(role = "admin", repo = result))
+    )
     oso.authorize(user, "read", result)
     return RepoModels.Response.fromRepo(result)
   }

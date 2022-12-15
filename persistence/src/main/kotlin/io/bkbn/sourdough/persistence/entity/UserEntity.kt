@@ -18,10 +18,13 @@ object UserTable : UUIDTable("users") {
 class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
   var email by UserTable.email
 
+  private val repoRoles by RepoRoleEntity referrersOn RepoRoleTable.user
+
   companion object : UUIDEntityClass<UserEntity>(UserTable)
 
   fun toUser(): User = User(
     id = this.id.value,
-    email = this.email
+    email = this.email,
+    repoRoles = this.repoRoles.map { it.toRepoRole() }
   )
 }

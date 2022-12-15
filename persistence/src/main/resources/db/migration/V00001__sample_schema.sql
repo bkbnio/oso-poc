@@ -3,7 +3,8 @@ CREATE TABLE users
     id         UUID                        NOT NULL,
     email      TEXT                        NOT NULL UNIQUE,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE repos
@@ -12,11 +13,16 @@ CREATE TABLE repos
     name       TEXT                        NOT NULL UNIQUE,
     is_public  BOOLEAN                     NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    PRIMARY KEY (id)
 );
 
-ALTER TABLE ONLY repos
-    ADD CONSTRAINT repos_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+CREATE TABLE repo_role
+(
+    user_id    UUID                        NOT NULL,
+    repo_id    UUID                        NOT NULL,
+    role       TEXT                        NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    PRIMARY KEY (user_id, repo_id)
+);
