@@ -68,7 +68,11 @@ allow(actor, action, resource) if
   }
 
   fun readByName(name: String): RepoModels.Response {
-    val result = RepoRepository.readByName(name)
+    val result = Repo(
+      id = UUID.randomUUID(),
+      name = name,
+      isPublic = true
+    )
     val user = User(
       id = UUID.randomUUID(),
       email = "admin@bkbn.io",
