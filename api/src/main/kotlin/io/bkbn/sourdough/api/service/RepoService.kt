@@ -36,7 +36,7 @@ resource Repo {
 
 # This rule tells Oso how to fetch roles for a Repo
 has_role(actor: User, role_name: String, Repo: Repo) if
-  role in actor.roles and
+  role in actor.repoRoles and
   role_name = role.name and
   Repo = role.Repo;
 
